@@ -1,0 +1,23 @@
+### GET ALL ARTISTS
+GET http://localhost:3001/artists HTTP/1.1
+### GET ARTIST BY Name
+GET http://localhost:3001/name?name=astro HTTP/1.1
+
+### CREATE NEW User
+POST http://localhost:3001/auth/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "astro@vwaza.com",
+  "password": "astro123",
+  "role": "ADMIN"
+}
+
+### Log in NEW User
+POST http://localhost:3001/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "astro@vwaza.com",
+  "password": "astro123"
+}
