@@ -2,7 +2,7 @@ This application uses npm to manage packages
 
 1. after cloning use npm install on both frontend and backend to install packages
 2. in the backend write npm run dev to start the server
-3. in the frontend write npm start to start the react server
+3. in the frontend write npm start to start the react server npm run dev
 
 #Backend Variables (ENV)
 DATABASE_URL=postgres://postgres:password123@@localhost:5432/vwaza

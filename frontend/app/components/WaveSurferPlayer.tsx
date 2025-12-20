@@ -138,21 +138,11 @@ const WaveSurferPlayer: React.FC<WaveSurferPlayerProps> = ({
 
     return (
         // Wrapper container with dark theme styling
-        <div className="">
+        <div className=" w-full">
 
             {/* Track Info and Volume Control */}
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-4">
-                    {/* Placeholder for a small cover */}
-                    <div className={`w-12 h-12 rounded-full overflow-hidden  transition-all duration-1000 flex items-center justify-center text-gray-500 text-xs shadow-md
-                    ${isPlaying ? 'animate-spin' : ''}
-                    `
-
-                    }>
-
-                        <img className="w-full h-full object-cover" src={currentTrack.cover_url} />
-
-                    </div>
                     <div>
                         <strong className="text-white text-lg font-extrabold block truncate w-64">
                             {currentTrack.title}
@@ -163,8 +153,19 @@ const WaveSurferPlayer: React.FC<WaveSurferPlayerProps> = ({
 
             </div>
 
-            {/* Waveform Visualization */}
-            <div ref={waveRef} className="my-3 rounded-md overflow-hidden " />
+            <div className="flex items-center space-x-2 px-2 mb-4 w-full">
+                {/* Placeholder for a small cover */}
+                <div className={`w-12 h-12 rounded-full overflow-hidden  transition-all duration-1000 flex items-center justify-center text-gray-500 text-xs shadow-md
+                    ${isPlaying ? 'animate-spin' : ''}
+                    `
+
+                }>
+
+                    <img className="w-full h-full object-cover" src={currentTrack.cover_url} />
+                </div>
+                {/* Waveform Visualization */}
+                <div ref={waveRef} className=" w-3/4 overflow-hidden " />
+            </div>
 
             {/* Controls and Timestamps */}
             <div className="flex items-center justify-between">

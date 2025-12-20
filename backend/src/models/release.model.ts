@@ -116,16 +116,59 @@ export async function getReleasesByArtist(artistId: string): Promise<any[]> {
         t.audio_url, 
         r.cover_url, 
         r.release_date,
+        r.is_published AS status,
+        a.artist_name,
         -- You can add featuring logic here if you have a contributors table
         '' as featuring 
     FROM releases r
     JOIN release_tracks rt ON r.id = rt.release_id
     JOIN tracks t ON rt.track_id = t.id
+    JOIN users a ON r.primary_artist_id = a.id
     WHERE r.primary_artist_id = $1
     ORDER BY r.created_at DESC, rt.track_number ASC
     `,
     [artistId]
   );
 
+  return result.rows;
+}
+
+/**
+ * Fetches an artist's releases including all associated track data (audio URLs).
+ * Uses JOINs across the normalized schema: releases -> release_tracks -> tracks.
+ */
+export async function getArtistLibrary(
+  artistId: string,
+  type?: "album" | "single"
+) {
+  let query = `
+    SELECT 
+      r.id AS "releaseId",
+      r.title AS "releaseTitle",
+      r.cover_url AS "coverUrl",
+      r.release_type AS "releaseType",
+      t.id AS "trackId",
+      t.title AS "trackTitle",
+      t.audio_url AS "audioUrl", -- Fetched from tracks table
+      t.genre,
+      t.is_published AS "status",
+      t.duration_ms AS "duration",
+      rt.track_number AS "trackNumber"
+    FROM releases r
+    JOIN release_tracks rt ON r.id = rt.release_id
+    JOIN tracks t ON rt.track_id = t.id
+    WHERE r.primary_artist_id = $1
+  `;
+
+  const params: any[] = [artistId];
+
+  if (type) {
+    query += ` AND r.release_type = $2`;
+    params.push(type);
+  }
+
+  query += ` ORDER BY r.release_date DESC, rt.track_number ASC`;
+
+  const result = await sql(query, params);
   return result.rows;
 }

@@ -14,6 +14,8 @@ interface Release {
     cover_url: string;
     audio_url: string;
     release_date: string;
+    status: boolean;
+    artist_name: string;
 }
 
 const ReleasesTable: React.FC = () => {
@@ -38,8 +40,6 @@ const ReleasesTable: React.FC = () => {
             console.error(err);
         }
     };
-
-    console.log("Releases fetched:", releases);
 
     const handlePlayClick = useCallback((index: number) => {
         if (selectedIndex === index) {
@@ -174,7 +174,7 @@ const ReleasesTable: React.FC = () => {
                             initialIndex={selectedIndex}
                             isPlaying={isPlaying} setIsPlaying={function (playing: boolean): void {
                                 throw new Error("Function not implemented.");
-                            }}                    // setIsPlaying={setIsPlaying}
+                            }}
                         />
                     </div>
                 )}

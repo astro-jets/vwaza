@@ -27,4 +27,7 @@ export default async function releasesRoutes(fastify: FastifyInstance) {
   fastify.get("/releases/artist", ReleaseController.getReleases);
 
   fastify.get("/search-artists", searchArtists);
+
+  // Updated route for the Artist Dashboard/Library
+  fastify.get("/library", ReleaseController.getMyLibrary);
 }

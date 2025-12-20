@@ -4,6 +4,7 @@ import { FastifyRequest, FastifyReply } from "fastify";
 import { uploadToBlob } from "../utils/blob";
 import { ReleaseFormData, TrackFormData } from "../validators/release.schema";
 import {
+  getArtistLibrary,
   getReleasesByArtist,
   insertRelease,
   insertTrackAndLink,
@@ -175,8 +176,26 @@ export const getReleases = async (req: FastifyRequest, reply: FastifyReply) => {
   }
 };
 
+export async function getMyLibrary(req: FastifyRequest, reply: FastifyReply) {
+  const artistId = req.user.id; // From auth hook [cite: 2, 4]
+  const { type } = req.query as { type?: "album" | "single" };
+
+  try {
+    const library = await getArtistLibrary(artistId, type);
+
+    return reply.send({
+      success: true,
+      data: library,
+    });
+  } catch (error) {
+    req.log.error(error as Error, "Library fetch error:");
+    return reply.code(500).send({ error: "Failed to fetch music library." });
+  }
+}
+
 export const ReleaseController = {
   createRelease,
   addTrackToRelease,
   getReleases,
+  getMyLibrary,
 };
