@@ -6,6 +6,7 @@ import axios from "axios";
 import { useReleaseStore } from "~/stores/useReleaseStore";
 import { ReleaseSchema, TrackSchema } from "~/validators/release.schema";
 import { useAuth } from "~/context/AuthContext";
+import SuccessModal from "~/components/modals/SuccessModal";
 
 // --- API Helpers ---
 
@@ -259,6 +260,7 @@ const ReviewAndSubmitStep: React.FC = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [progress, setProgress] = useState("");
     const [error, setError] = useState<string | null>(null);
+    const [showSuccess, setShowSuccess] = useState(false);
 
     const handleFinalSubmit = async () => {
         if (!token) return setError("Session expired. Please login again.");
@@ -312,9 +314,7 @@ const ReviewAndSubmitStep: React.FC = () => {
             }
 
             setProgress("Done!");
-            alert("Congratulations! Your release is live.");
-            resetStore();
-            window.location.href = "/artists";
+            setShowSuccess(true);
         } catch (err: any) {
             console.error(err);
             setError(err.response?.data?.error || "An error occurred during upload.");
@@ -327,7 +327,7 @@ const ReviewAndSubmitStep: React.FC = () => {
         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
             <h2 className="text-xl font-bold text-white border-l-4 border-red-600 pl-3">Review & Publish</h2>
 
-            <div className="bg-black border border-neutral-800 rounded-2xl overflow-hidden">
+            <div className="bg-black border border-neutral-800 rounded-2xl ">
                 <div className="flex flex-col md:flex-row gap-6 p-6">
                     {release.coverFile && <img src={URL.createObjectURL(release.coverFile)} className="w-40 h-40 rounded-xl object-cover shadow-2xl" />}
                     <div className="space-y-2">
@@ -350,10 +350,19 @@ const ReviewAndSubmitStep: React.FC = () => {
 
             <div className="flex justify-between pt-4">
                 <button disabled={isSubmitting} onClick={prevStep} className="px-6 py-3 text-neutral-400 hover:text-white flex items-center gap-2 font-bold"><FiArrowLeft /> Back</button>
-                <button disabled={isSubmitting} onClick={handleFinalSubmit} className="bg-red-600 hover:bg-red-500 disabled:opacity-50 px-12 py-4 rounded-xl text-white font-bold flex items-center gap-2 shadow-xl shadow-red-900/40">
+                <button disabled={isSubmitting} onClick={handleFinalSubmit} className={`bg-red-600 hover:bg-red-500 disabled:opacity-50 px-12 py-4 rounded-xl text-white font-bold flex items-center gap-2 shadow-xl shadow-red-900/40 ${isSubmitting ? 'cursor-not-allowed' : 'cursor-pointer'}`}>
                     <FiUpload /> {isSubmitting ? "Uploading..." : "Publish Release"}
                 </button>
             </div>
+
+            <SuccessModal
+                isOpen={showSuccess}
+                onClose={() => {
+                    resetStore();
+                    setShowSuccess(false);
+                    window.location.href = "/artists"; // Redirect to dashboard
+                }}
+            />
         </div>
     );
 };
@@ -364,7 +373,7 @@ export default function UploadSection() {
 
     return (
         <ArtistLayout>
-            <div className="max-w-4xl mx-auto py-12 px-6">
+            <div className="max-w-8xl mx-auto  p-4">
                 <div className="mb-10 text-center">
                     <h1 className="text-4xl font-black text-white mb-2 tracking-tight">CREATE <span className="text-red-600">RELEASE</span></h1>
                     <div className="flex items-center justify-center gap-2">
@@ -374,7 +383,7 @@ export default function UploadSection() {
                     </div>
                 </div>
 
-                <div className="bg-neutral-900/50 border border-neutral-800 p-8 rounded-3xl shadow-2xl backdrop-blur-sm">
+                <div className="w-full bg-neutral-900/50 border border-neutral-800 p-8 rounded-3xl shadow-2xl backdrop-blur-sm">
                     {currentStep === 1 && <ReleaseMetadataStep next={nextStep} />}
                     {currentStep === 2 && <TrackDetailsStep prev={prevStep} next={nextStep} />}
                     {currentStep === 3 && <ReviewAndSubmitStep />}

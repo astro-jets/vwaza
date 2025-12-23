@@ -1,21 +1,21 @@
-import React, { type ReactNode, useState } from 'react';
-import { FaMusic, FaChartBar, FaCloudUploadAlt, FaSignOutAlt, FaHome, FaSpinner } from 'react-icons/fa';
+import React, { type ReactNode } from 'react';
+import { FaSpinner } from 'react-icons/fa';
 import { IoMdMail } from 'react-icons/io';
 import { AuthProvider, useAuth } from '~/context/AuthContext';
+import ArtistSidebar from './ArtistSidebar';
 
 interface ArtistLayoutProps {
     children: ReactNode;
 }
 
 const BG_DARK = "bg-neutral-800";
-const SIDEBAR_BG = "bg-neutral-800";
 const HEADER_BG = "bg-neutral-800";
 
 // --- Inner Component that actually uses Auth ---
 const ArtistLayoutContent: React.FC<ArtistLayoutProps> = ({ children }) => {
     // Now useAuth is safely inside the AuthProvider
-    const { user, loading, logout } = useAuth();
-    const [activeRoute] = useState<string>("/artist/");
+    const { user, loading } = useAuth();
+
 
     // Handle Loading State
     if (loading) {
@@ -29,34 +29,11 @@ const ArtistLayoutContent: React.FC<ArtistLayoutProps> = ({ children }) => {
     }
 
     return (
-        <div className={`flex min-h-screen ${BG_DARK}`}>
-            {/* Sidebar */}
-            <aside className={`w-64 ${SIDEBAR_BG} p-4 flex flex-col justify-between border-r border-red-500 shadow-lg`}>
-                <div>
-                    <div className="text-3xl font-extrabold mb-8 text-white tracking-widest text-center">
-                        <span className="text-white">VW</span>AZA
-                    </div>
-                    <nav>
-                        <NavLink icon={FaHome} label="Dashboard" href="/artists/" isActive={activeRoute === "/artists/"} />
-                        <NavLink icon={FaMusic} label="My Releases" href="/artists/releases" isActive={activeRoute === "/artists/releases"} />
-                        <NavLink icon={FaCloudUploadAlt} label="New Upload" href="/artists/upload" isActive={activeRoute === "/artists/upload"} />
-                        <NavLink icon={FaChartBar} label="Analytics" href="/artists/analytics" isActive={activeRoute === "/artists/analytics"} />
-                    </nav>
-                </div>
-
-                <div className="pb-4">
-                    <button
-                        onClick={logout}
-                        className="w-full flex items-center p-3 rounded-lg text-gray-400 bg-gray-700 hover:bg-red-700 hover:text-white transition-all duration-200"
-                    >
-                        <FaSignOutAlt className="w-5 h-5 mr-3" />
-                        <span className="font-medium">Logout</span>
-                    </button>
-                </div>
-            </aside>
+        <div className={`flex justify-between min-h-screen ${BG_DARK}`}>
+            <ArtistSidebar />
 
             {/* Main Area */}
-            <div className="flex-1 flex flex-col">
+            <div className="ml-64 flex-1 flex flex-col">
                 <header className={`p-4 ${HEADER_BG} shadow-md flex items-center justify-between border-b border-red-500`}>
                     <div className="text-xl font-semibold text-white">
                         {user?.username}
@@ -91,15 +68,3 @@ const ArtistLayout: React.FC<ArtistLayoutProps> = ({ children }) => {
 
 export default ArtistLayout;
 
-// --- Helper Component ---
-const NavLink: React.FC<{ icon: any, label: string, isActive: boolean, href: string }> = ({ icon: Icon, label, isActive, href }) => {
-    const activeClasses = "bg-gray-900 text-white border-l-4 border-white shadow-inner shadow-gray-900/30";
-    const defaultClasses = "hover:bg-gray-700/50 text-gray-400";
-
-    return (
-        <a href={href} className={`flex items-center p-3 my-2 rounded-lg transition-all duration-200 ${isActive ? activeClasses : defaultClasses}`}>
-            <Icon className="w-5 h-5 mr-3" />
-            <span className="font-medium">{label}</span>
-        </a>
-    );
-};

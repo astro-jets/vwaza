@@ -82,7 +82,7 @@ const ArtistDashboardTemplate: React.FC = () => {
 
 
                     {/* Status Tracker List */}
-                    <div className="bg-neutral-900/50 bg-[#111] border border-neutral-700 rounded-2xl overflow-hidden shadow-xl">
+                    <div className="bg-neutral-900/50 border border-neutral-700 rounded-2xl overflow-hidden shadow-xl">
                         <div className="p-6 border-b border-neutral-700 flex items-center">
                             {!isPlaying ?
                                 <h2 className="text-xl font-bold text-white">Your Releases</h2> :
