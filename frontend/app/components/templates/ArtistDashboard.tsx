@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { FaMusic, FaCheckCircle, FaSpinner, FaExclamationCircle } from 'react-icons/fa';
+import { FaMusic, FaCheckCircle, FaSpinner } from 'react-icons/fa';
 import axios from 'axios';
 import { useAuth } from '~/context/AuthContext';
 import type { IconType } from 'react-icons/lib';
@@ -28,21 +28,23 @@ const ArtistDashboardTemplate: React.FC = () => {
 
     // Polling logic for "Real-time" status flips 
     useEffect(() => {
-        const fetchStats = async () => {
+        const fetchReleases = async () => {
             try {
-                const res = await axios.get("http://localhost:3001/artist/releases", {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
+                const res = await axios.get("http://localhost:3001/artist/releases/artist",
+                    { headers: { Authorization: `Bearer ${token}` } });
                 setReleases(res.data);
+                if (res.data.length > 0) {
+                    // Automatically select the first track to load the player
+                    setSelectedIndex(0);
+                }
             } catch (err) {
-                console.error("Dashboard fetch error:", err);
+                console.error(err);
             }
         };
 
-        fetchStats();
-        const interval = setInterval(fetchStats, 5000); // Poll every 5 seconds
-        return () => clearInterval(interval);
-    }, [token]);
+        fetchReleases();
+
+    }, []);
 
     const handlePlayClick = useCallback((index: number) => {
         if (selectedIndex === index) {
@@ -80,16 +82,18 @@ const ArtistDashboardTemplate: React.FC = () => {
 
 
                     {/* Status Tracker List */}
-                    <div className="bg-neutral-900/50 border border-neutral-700 rounded-2xl overflow-hidden shadow-xl">
+                    <div className="bg-neutral-900/50 bg-[#111] border border-neutral-700 rounded-2xl overflow-hidden shadow-xl">
                         <div className="p-6 border-b border-neutral-700 flex items-center">
-                            {/* <h2 className="text-xl font-bold text-white">Your Releases</h2> */}
-                            <WaveSurferPlayer
-                                tracks={releases}
-                                initialIndex={selectedIndex}
-                                isPlaying={isPlaying} setIsPlaying={function (playing: boolean): void {
-                                    throw new Error("Function not implemented.");
-                                }}
-                            />
+                            {!isPlaying ?
+                                <h2 className="text-xl font-bold text-white">Your Releases</h2> :
+                                <WaveSurferPlayer
+                                    tracks={releases}
+                                    initialIndex={selectedIndex}
+                                    isPlaying={isPlaying} setIsPlaying={function (playing: boolean): void {
+                                        throw new Error("Function not implemented.");
+                                    }}
+                                />
+                            }
                         </div>
 
                         <div className="divide-y divide-neutral-800">

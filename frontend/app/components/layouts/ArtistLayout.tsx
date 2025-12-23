@@ -1,5 +1,5 @@
 import React, { type ReactNode, useState } from 'react';
-import { FaMusic, FaChartBar, FaCloudUploadAlt, FaSignOutAlt, FaHome } from 'react-icons/fa';
+import { FaMusic, FaChartBar, FaCloudUploadAlt, FaSignOutAlt, FaHome, FaSpinner } from 'react-icons/fa';
 import { IoMdMail } from 'react-icons/io';
 import { AuthProvider, useAuth } from '~/context/AuthContext';
 
@@ -19,7 +19,7 @@ const ArtistLayoutContent: React.FC<ArtistLayoutProps> = ({ children }) => {
 
     // Handle Loading State
     if (loading) {
-        return <div className="bg-black min-h-screen flex items-center justify-center text-white">Loading...</div>;
+        return <div className="bg-[#222] backdrop-blur-2xl min-h-screen flex items-center justify-center text-white"> <FaSpinner size={60} className="animate-spin fill-red-500" /> </div>;
     }
 
     // Handle Protected Route Logic
@@ -31,7 +31,7 @@ const ArtistLayoutContent: React.FC<ArtistLayoutProps> = ({ children }) => {
     return (
         <div className={`flex min-h-screen ${BG_DARK}`}>
             {/* Sidebar */}
-            <aside className={`w-64 ${SIDEBAR_BG} p-4 flex flex-col justify-between border-r border-gray-700 shadow-lg`}>
+            <aside className={`w-64 ${SIDEBAR_BG} p-4 flex flex-col justify-between border-r border-red-500 shadow-lg`}>
                 <div>
                     <div className="text-3xl font-extrabold mb-8 text-white tracking-widest text-center">
                         <span className="text-white">VW</span>AZA
@@ -57,16 +57,16 @@ const ArtistLayoutContent: React.FC<ArtistLayoutProps> = ({ children }) => {
 
             {/* Main Area */}
             <div className="flex-1 flex flex-col">
-                <header className={`p-4 ${HEADER_BG} shadow-md flex items-center justify-between border-b border-gray-700`}>
+                <header className={`p-4 ${HEADER_BG} shadow-md flex items-center justify-between border-b border-red-500`}>
                     <div className="text-xl font-semibold text-white">
-                        Welcome, {user?.username}!
+                        {user?.username}
                     </div>
                     <div className="flex items-center space-x-4">
                         <button className="relative p-2 text-gray-400 hover:text-white transition-colors hover:bg-gray-700 rounded-full">
                             <IoMdMail className="w-6 h-6" />
-                            <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500 border-2 border-gray-800"></span>
+                            <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500 border-2 border-red-800"></span>
                         </button>
-                        <div className="h-10 w-10 bg-white rounded-full border-2 border-gray-500"></div>
+                        <div className="h-10 w-10 bg-white rounded-full border-2 border-red-500"></div>
                     </div>
                 </header>
 
