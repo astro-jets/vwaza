@@ -6,7 +6,7 @@ import { searchArtists } from "../controllers/artist.controller";
 import { authenticate } from "../hooks/auth.hooks";
 
 export default async function releasesRoutes(fastify: FastifyInstance) {
-  fastify.addHook("preHandler", authenticate);
+  // fastify.addHook("preHandler", authenticate);
 
   // 1. Endpoint for Step 1: Create Release Container (Metadata + Cover Art)
   // Route: POST /artist/releases
@@ -23,11 +23,11 @@ export default async function releasesRoutes(fastify: FastifyInstance) {
   // 3. Existing route for fetching  all releases
   fastify.get("/releases", ReleaseController.getReleases);
 
-  // 4. get releases by artist here
-  fastify.get("/releases/artist", ReleaseController.getReleases);
-
   fastify.get("/search-artists", searchArtists);
 
   // Updated route for the Artist Dashboard/Library
-  fastify.get("/library", ReleaseController.getMyLibrary);
+  fastify.get("/library/:releaseType", ReleaseController.getMyLibrary);
+
+  // Get release by ID
+  fastify.get("/releases/:id", ReleaseController.getReleaseById);
 }

@@ -6,6 +6,8 @@ import { ReleaseFormData, TrackFormData } from "../validators/release.schema";
 import {
   getArtistLibrary,
   getReleasesByArtist,
+  getReleasesByCategory,
+  getReleasesById,
   insertRelease,
   insertTrackAndLink,
 } from "../models/release.model";
@@ -161,7 +163,7 @@ export async function addTrackToRelease(
 // src/controllers/releases.controller.ts
 
 export const getReleases = async (req: FastifyRequest, reply: FastifyReply) => {
-  const artistId = req.user.id;
+  const artistId = "35b74e4a-f733-445e-958d-fe05f3369fd6"; //req.user.id;
 
   try {
     const data = await getReleasesByArtist(artistId);
@@ -177,11 +179,11 @@ export const getReleases = async (req: FastifyRequest, reply: FastifyReply) => {
 };
 
 export async function getMyLibrary(req: FastifyRequest, reply: FastifyReply) {
-  const artistId = req.user.id; // From auth hook [cite: 2, 4]
-  const { type } = req.query as { type?: "album" | "single" };
+  const artistId = req.user.id;
+  const { releaseType } = req.params as { releaseType: string };
 
   try {
-    const library = await getArtistLibrary(artistId, type);
+    const library = await getArtistLibrary(artistId, releaseType);
 
     return reply.send({
       success: true,
@@ -193,9 +195,23 @@ export async function getMyLibrary(req: FastifyRequest, reply: FastifyReply) {
   }
 }
 
+export async function getReleaseById(req: FastifyRequest, reply: FastifyReply) {
+  const { id } = req.params as { id: string };
+
+  try {
+    const release = await getReleasesById(id);
+
+    return reply.send(release);
+  } catch (error) {
+    req.log.error(error as Error, "Release fetch error:");
+    return reply.code(500).send({ error: "Failed to fetch release." });
+  }
+}
+
 export const ReleaseController = {
   createRelease,
   addTrackToRelease,
   getReleases,
   getMyLibrary,
+  getReleaseById,
 };

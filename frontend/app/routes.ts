@@ -4,6 +4,7 @@ export default [
   index("routes/home.tsx"),
   route("/artists", "pages/artist/dashboard.tsx"),
   route("/artists/releases", "pages/artist/releases.tsx"),
+  route("/artists/releases/:id", "pages/artist/release.tsx"),
   route("/artists/upload", "pages/artist/createrelease.tsx"),
   route("/admin/dashboard", "pages/admin/dashboard.tsx"),
   route("/admin/releases", "pages/admin/reviewrelease.tsx"),

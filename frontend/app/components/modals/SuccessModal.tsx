@@ -12,7 +12,7 @@ const SuccessModal: React.FC<SuccessModalProps> = ({ isOpen, onClose, title, mes
 
 
     return (
-        <div className="fixed top-0 inset-0 z-100 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-300">
+        <div className="absolute w-full h-full top-0 left-0 inset-0 z-100 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-300 overflow-hidden">
             <div className="bg-neutral-900 border border-neutral-800 w-full max-w-sm rounded-2xl shadow-2xl p-8 relative overflow-hidden">
 
                 {/* Decorative Red Glow */}

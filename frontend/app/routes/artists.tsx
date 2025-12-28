@@ -50,7 +50,7 @@ export default function artistRoutes() {
 
     return (
         <div className="container mx-auto p-6">
-            <h1 className="text-4xl font-bold mb-4 text-center">Artists</h1>
+            <h1 className="text-xl md:text-4xl font-bold mb-4 text-center">Artists</h1>
 
             <div className="max-w-lg mx-auto  p-6 rounded shadow">
                 <form onSubmit={handleSubmit(onSubmit)}>

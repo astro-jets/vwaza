@@ -114,20 +114,79 @@ export async function getReleasesByArtist(artistId: string): Promise<any[]> {
         t.title, 
         t.genre, 
         t.audio_url, 
+        r.id AS release_id, 
         r.cover_url, 
+        r.title AS release_title,
         r.release_date,
         r.is_published AS status,
         a.artist_name,
-        -- You can add featuring logic here if you have a contributors table
-        '' as featuring 
+        rt.track_number
     FROM releases r
     JOIN release_tracks rt ON r.id = rt.release_id
     JOIN tracks t ON rt.track_id = t.id
     JOIN users a ON r.primary_artist_id = a.id
-    WHERE r.primary_artist_id = $1
+    WHERE r.primary_artist_id = $1 
     ORDER BY r.created_at DESC, rt.track_number ASC
     `,
     [artistId]
+  );
+
+  return result.rows;
+}
+
+export async function getReleasesByCategory(
+  artistId: string,
+  category: string
+): Promise<any[]> {
+  const result = await sql(
+    `
+    SELECT 
+        t.id, 
+        t.title, 
+        t.genre, 
+        t.audio_url, 
+        r.cover_url, 
+        r.release_type, 
+        r.release_date,
+        r.is_published AS status,
+        a.artist_name
+    FROM releases r
+    JOIN release_tracks rt ON r.id = rt.release_id
+    JOIN tracks t ON rt.track_id = t.id
+    JOIN users a ON r.primary_artist_id = a.id
+    WHERE r.primary_artist_id = $1 
+    AND r.release_type = $2
+    ORDER BY r.created_at DESC, rt.track_number ASC
+    `,
+    [artistId, category]
+  );
+
+  return result.rows;
+}
+
+export async function getReleasesById(id: string): Promise<any[]> {
+  const result = await sql(
+    `
+    SELECT 
+        t.id, 
+        t.title, 
+        t.genre, 
+        t.audio_url, 
+        r.cover_url, 
+        r.release_type, 
+        r.release_date,
+        r.title AS release_title,
+        r.is_published AS status,
+        a.artist_name,
+        rt.track_number
+    FROM releases r
+    JOIN release_tracks rt ON r.id = rt.release_id
+    JOIN tracks t ON rt.track_id = t.id
+    JOIN users a ON r.primary_artist_id = a.id
+    WHERE r.id = $1 
+    ORDER BY r.created_at DESC, rt.track_number ASC
+    `,
+    [id]
   );
 
   return result.rows;
@@ -137,21 +196,18 @@ export async function getReleasesByArtist(artistId: string): Promise<any[]> {
  * Fetches an artist's releases including all associated track data (audio URLs).
  * Uses JOINs across the normalized schema: releases -> release_tracks -> tracks.
  */
-export async function getArtistLibrary(
-  artistId: string,
-  type?: "album" | "single"
-) {
+export async function getArtistLibrary(artistId: string, type: string) {
   let query = `
     SELECT 
       r.id AS "releaseId",
       r.title AS "releaseTitle",
       r.cover_url AS "coverUrl",
       r.release_type AS "releaseType",
+      r.is_published AS "status",
       t.id AS "trackId",
       t.title AS "trackTitle",
       t.audio_url AS "audioUrl", -- Fetched from tracks table
       t.genre,
-      t.is_published AS "status",
       t.duration_ms AS "duration",
       rt.track_number AS "trackNumber"
     FROM releases r

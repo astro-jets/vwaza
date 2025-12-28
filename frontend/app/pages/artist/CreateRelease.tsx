@@ -7,6 +7,7 @@ import { useReleaseStore } from "~/stores/useReleaseStore";
 import { ReleaseSchema, TrackSchema } from "~/validators/release.schema";
 import { useAuth } from "~/context/AuthContext";
 import SuccessModal from "~/components/modals/SuccessModal";
+import { BsX } from "react-icons/bs";
 
 // --- API Helpers ---
 
@@ -158,6 +159,14 @@ const TrackDetailsStep: React.FC<{ prev: () => void, next: () => void }> = ({ pr
         }
         setSearchTerm("");
     };
+
+    const removeFeaturing = (artistId: string) => {
+        const exists = newTrack.contributorIds?.find((c: any) => c.id === artistId);
+        if (exists) {
+            setNewTrack({ ...newTrack, contributorIds: newTrack.contributorIds.filter((c: any) => c.id !== artistId) });
+        }
+
+    };
     const getError = (path: string) => errors.find(e => e.path[0] === path)?.message;
 
     return (
@@ -222,9 +231,13 @@ const TrackDetailsStep: React.FC<{ prev: () => void, next: () => void }> = ({ pr
                 {/* Selected Contributors Tags */}
                 <div className="flex flex-wrap gap-2">
                     {newTrack.contributorIds?.map((c: any) => (
-                        <span key={c.id} className="bg-red-600/10 text-red-500 border border-red-600/20 px-3 py-1 rounded-full text-xs font-bold">
-                            @{c.username}
-                        </span>
+                        <div key={c.id} className="flex space-x-2  items-center bg-red-600/10 text-red-500 border border-red-600/20 px-3 py-1 rounded-full text-xs font-bold">
+                            <span>
+                                {c.username}
+                            </span>
+
+                            <BsX size={15} className="cursor-pointer" onClick={() => removeFeaturing(c.id)} />
+                        </div>
                     ))}
                 </div>
 
@@ -324,7 +337,15 @@ const ReviewAndSubmitStep: React.FC = () => {
     };
 
     return (
-        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
+        <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 overflow-hidden">
+            <SuccessModal
+                isOpen={true}
+                onClose={() => {
+                    resetStore();
+                    setShowSuccess(false);
+                    window.location.href = "/artists"; // Redirect to dashboard
+                }}
+            />
             <h2 className="text-xl font-bold text-white border-l-4 border-red-600 pl-3">Review & Publish</h2>
 
             <div className="bg-black border border-neutral-800 rounded-2xl ">
@@ -354,15 +375,6 @@ const ReviewAndSubmitStep: React.FC = () => {
                     <FiUpload /> {isSubmitting ? "Uploading..." : "Publish Release"}
                 </button>
             </div>
-
-            <SuccessModal
-                isOpen={showSuccess}
-                onClose={() => {
-                    resetStore();
-                    setShowSuccess(false);
-                    window.location.href = "/artists"; // Redirect to dashboard
-                }}
-            />
         </div>
     );
 };
@@ -373,9 +385,9 @@ export default function UploadSection() {
 
     return (
         <ArtistLayout>
-            <div className="max-w-8xl mx-auto  p-4">
+            <div className=" mx-auto  p-4">
                 <div className="mb-10 text-center">
-                    <h1 className="text-4xl font-black text-white mb-2 tracking-tight">CREATE <span className="text-red-600">RELEASE</span></h1>
+                    <h1 className="text-xl md:text-4xl font-black text-white mb-2 tracking-tight">CREATE <span className="text-red-600">RELEASE</span></h1>
                     <div className="flex items-center justify-center gap-2">
                         {[1, 2, 3].map(s => (
                             <div key={s} className={`h-1.5 w-12 rounded-full transition-all duration-500 ${currentStep >= s ? 'bg-red-600' : 'bg-neutral-800'}`} />
