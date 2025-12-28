@@ -6,7 +6,7 @@ import { searchArtists } from "../controllers/artist.controller";
 import { authenticate } from "../hooks/auth.hooks";
 
 export default async function releasesRoutes(fastify: FastifyInstance) {
-  // fastify.addHook("preHandler", authenticate);
+  fastify.addHook("preHandler", authenticate);
 
   // 1. Endpoint for Step 1: Create Release Container (Metadata + Cover Art)
   // Route: POST /artist/releases

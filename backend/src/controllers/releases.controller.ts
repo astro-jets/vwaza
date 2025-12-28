@@ -2,11 +2,10 @@
 
 import { FastifyRequest, FastifyReply } from "fastify";
 import { uploadToBlob } from "../utils/blob";
-import { ReleaseFormData, TrackFormData } from "../validators/release.schema";
+import { ReleaseFormData } from "../validators/release.schema";
 import {
   getArtistLibrary,
   getReleasesByArtist,
-  getReleasesByCategory,
   getReleasesById,
   insertRelease,
   insertTrackAndLink,
@@ -159,11 +158,9 @@ export async function addTrackToRelease(
     return reply.code(500).send({ error: "Server error adding track." });
   }
 }
-// Placeholder for existing route
-// src/controllers/releases.controller.ts
 
 export const getReleases = async (req: FastifyRequest, reply: FastifyReply) => {
-  const artistId = "35b74e4a-f733-445e-958d-fe05f3369fd6"; //req.user.id;
+  const artistId = req.user.id;
 
   try {
     const data = await getReleasesByArtist(artistId);

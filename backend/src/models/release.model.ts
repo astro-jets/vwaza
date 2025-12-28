@@ -118,6 +118,7 @@ export async function getReleasesByArtist(artistId: string): Promise<any[]> {
         r.cover_url, 
         r.title AS release_title,
         r.release_date,
+        r.release_type,
         r.is_published AS status,
         a.artist_name,
         rt.track_number
