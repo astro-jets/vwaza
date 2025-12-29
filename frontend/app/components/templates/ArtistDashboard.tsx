@@ -8,12 +8,14 @@ import WaveSurferPlayer from '../WaveSurferPlayer';
 import { Link } from 'react-router';
 
 interface ReleaseSummary {
-    id: string;
+    id: number;
     title: string;
     featuring?: string;
     genre: string;
     cover_url: string;
     audio_url: string;
+    track_number: number;
+    release_title: string;
     release_date: string;
     release_type: 'single' | 'album' | 'ep';
     status: boolean;
@@ -26,6 +28,8 @@ const ArtistDashboardTemplate: React.FC = () => {
     const { token } = useAuth();
     const [selectedIndex, setSelectedIndex] = useState<number>(0);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
+    const [loading, setLoading] = useState(true);
+
     // --- Pagination State ---
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
@@ -42,6 +46,7 @@ const ArtistDashboardTemplate: React.FC = () => {
                     plays: Math.floor(Math.random() * 50000) + 1200
                 }));
                 setReleases(dataWithMockStats);
+                setLoading(false)
             } catch (err) {
                 console.error(err);
             }
@@ -207,7 +212,7 @@ const ArtistDashboardTemplate: React.FC = () => {
                             return (
                                 <div key={release.id} className="grid grid-cols-12 gap-4 p-4 items-center hover:bg-white/5 transition-all group">
                                     <div className="col-span-6 md:col-span-5 flex items-center space-x-4">
-                                        <div className="relative flex-shrink-0 cursor-pointer" onClick={() => handlePlayClick(globalIndex)}>
+                                        <div className="relative shrink-0 cursor-pointer" onClick={() => handlePlayClick(globalIndex)}>
                                             <img src={release.cover_url} className="w-12 h-12 rounded-lg object-cover group-hover:opacity-50 transition-opacity" />
                                             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-white">
                                                 {globalIndex === selectedIndex && isPlaying ? <FiPause /> : <FiPlay />}

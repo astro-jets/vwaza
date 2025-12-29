@@ -5,10 +5,14 @@ import { FaPlay, FaPause, FaStepBackward, FaStepForward, FaVolumeUp, FaVolumeMut
 import { IoVolumeHigh, IoVolumeMute } from "react-icons/io5";
 
 interface Release {
-    cover_url: string;
-    id: string;
+    id: number; // maps to tracks.id
     title: string;
+    genre: string;
     audio_url: string;
+    artist_name: string;
+    track_number: number; // maps to release_tracks.track_number
+    release_title: string;
+    cover_url?: string;
 }
 
 interface WaveSurferPlayerProps {
