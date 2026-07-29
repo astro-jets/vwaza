@@ -65,7 +65,7 @@ const WaveSurferPlayer: React.FC<WaveSurferPlayerProps> = ({
                 interact: true,
             });
 
-            waveSurferRef.current.load(tracks[currentIndex].audio_url);
+            waveSurferRef.current.load(`/uploads/audios/${tracks[currentIndex].audio_url}`);
 
             waveSurferRef.current.on("finish", () => {
                 handleNext();
@@ -162,10 +162,9 @@ const WaveSurferPlayer: React.FC<WaveSurferPlayerProps> = ({
                 <div className={`w-12 h-12 rounded-full overflow-hidden  transition-all duration-1000 flex items-center justify-center text-gray-500 text-xs shadow-md
                     ${isPlaying ? 'animate-spin' : ''}
                     `
-
                 }>
 
-                    <img className="w-full h-full object-cover" src={currentTrack.cover_url} />
+                    <img className="w-full h-full object-cover" src={`import type { EmblaOptionsType } from 'embla-carousel'${currentTrack.cover_url}`} />
                 </div>
                 {/* Waveform Visualization */}
                 <div ref={waveRef} className=" w-3/4 overflow-hidden " />

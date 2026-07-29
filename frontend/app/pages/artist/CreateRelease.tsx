@@ -327,7 +327,7 @@ const ReviewAndSubmitStep: React.FC = () => {
             }
 
             setProgress("Done!");
-            setShowSuccess(true);
+            setShowSuccess(true)
         } catch (err: any) {
             console.error(err);
             setError(err.response?.data?.error || "An error occurred during upload.");
@@ -339,7 +339,7 @@ const ReviewAndSubmitStep: React.FC = () => {
     return (
         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 overflow-hidden">
             <SuccessModal
-                isOpen={true}
+                isOpen={showSuccess}
                 onClose={() => {
                     resetStore();
                     setShowSuccess(false);

@@ -46,7 +46,7 @@ const ReleasesTable: React.FC = () => {
 
     const fetchReleases = async () => {
         try {
-            const res = await axios.get<Release[]>("http://localhost:3001/artist/releases", { headers: { Authorization: `Bearer ${token}` } });
+            const res = await axios.get<Release[]>("http://localhost:3001/artist/category/album", { headers: { Authorization: `Bearer ${token}` } });
             setReleases(res.data);
             setFilteredReleases(res.data);
             if (res.data.length > 0) {
@@ -72,12 +72,6 @@ const ReleasesTable: React.FC = () => {
 
     // Tailwind CSS classes for Dribbble-style dark theme
     const baseClasses = "min-h-screen text-neutral-950 ";
-    const tableClasses = "w-full text-left border-collapse rounded-xl overflow-hidden shadow-2xl shadow-red-900/20";
-    const headCellClasses = "px-6 py-4 text-sm font-semibold uppercase tracking-wider text-white bg-neutral-900 border-b border-netural-700";
-    const dataCellClasses = "px-6 py-4 text-sm font-medium text-netural-300 border-b border-netural-800 transition duration-300 ease-in-out";
-    const rowBaseClasses = "text-white hover:bg-netural-800/70";
-    const rowSelectedClasses = "bg-red-900/30 border-l-2 text-white border-red-500 shadow-inner shadow-red-900/40";
-    const buttonClasses = "p-2 rounded-full transition-all duration-200 ease-in-out";
 
     return (
         <div className="p-4">
@@ -195,13 +189,13 @@ const ReleasesTable: React.FC = () => {
                     //         </tbody>
                     //     </table>
                     // </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                         {filteredReleases?.map((release, idx) => {
                             return (
                                 <Link to={release.release_id} key={idx} className="bg-neutral-900/50 border border-neutral-700 p-1 rounded-2xl shadow-lg">
                                     <div className="flex flex-col items-center">
                                         <div className="md:w-full rounded-2xl h-50 overflow-hidden">
-                                            <img src={'/img.png'} className="object-cover w-full h-full" />
+                                            <img src={`import type { EmblaOptionsType } from 'embla-carousel'${release.cover_url}`} className="object-cover w-full h-full" />
                                         </div>
                                         <div>
                                             <h3 className="text-3xl font-thin text-white my-1">{release.title}</h3>

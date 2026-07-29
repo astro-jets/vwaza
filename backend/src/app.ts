@@ -8,6 +8,9 @@ import postgresPlugin from "./plugins/postgress";
 import healthRoute from "./routes/health.route";
 import releasesRoute from "./routes/releases.route";
 import authRoutes from "./routes/auth.route";
+import playlistRoute from "./routes/playlist.route";
+import eventsRoute from "./routes/event.route";
+import searchRoutes from "./routes/search.route";
 
 dotenv.config();
 
@@ -22,7 +25,10 @@ export async function buildApp() {
   // Routes
   await app.register(healthRoute);
   await app.register(authRoutes);
+  await app.register(searchRoutes, { prefix: "/search" });
+  await app.register(eventsRoute, { prefix: "/events" });
   await app.register(releasesRoute, { prefix: "/artist" });
+  await app.register(playlistRoute, { prefix: "/playlist" });
 
   return app;
 }

@@ -34,7 +34,7 @@ export async function SubmitRelease(data: ReleaseFormData) {
           // NOTE: Include your Authorization token here if you have an auth system (e.g., JWT)
           // Authorization: `Bearer ${token}`
         },
-      }
+      },
     );
     releaseId = response.data.releaseId;
     console.log(`Release container created with ID: ${releaseId}`);
@@ -70,7 +70,7 @@ export async function SubmitRelease(data: ReleaseFormData) {
             // NOTE: Include your Authorization token here
           },
           // Optional: Add onUploadProgress callback for UI feedback
-        }
+        },
       );
       console.log(`Track ${index + 1} uploaded successfully.`);
     } catch (error) {

@@ -2,10 +2,13 @@
 
 import { FastifyRequest, FastifyReply } from "fastify";
 import { uploadToBlob } from "../utils/blob";
+import { uploadImageLocally, uploadLocally } from "../helpers/upload";
 import { ReleaseFormData } from "../validators/release.schema";
 import {
+  getAllReleases,
   getArtistLibrary,
   getReleasesByArtist,
+  getReleasesByCategory,
   getReleasesById,
   insertRelease,
   insertTrackAndLink,
@@ -25,12 +28,7 @@ declare module "fastify" {
 // ==========================================================
 
 /**
- * Controller function for Step 1: Create the Release Container (Metadata + Cover).
- * Endpoint: POST /artist/releases
- */
-// src/controllers/releases.controller.ts
-
-// src/controllers/releases.controller.ts
+ * Controller function for Step 1: Create the Release Container (Metadata + Cover */
 
 export async function createRelease(req: FastifyRequest, reply: FastifyReply) {
   const primaryArtistId = req.user.id;
@@ -66,12 +64,21 @@ export async function createRelease(req: FastifyRequest, reply: FastifyReply) {
     }
 
     // 3. Pass the BUFFER to your upload function instead of the stream
-    const coverUrl = await uploadToBlob(
+    // const coverUrl = await uploadToBlob(
+    //   coverFileBuffer, // Pass buffer here
+    //   coverFileName,
+    //   coverMimeType,
+    //   "covers",
+    // );
+
+    const coverUrl = await uploadImageLocally(
       coverFileBuffer, // Pass buffer here
       coverFileName,
       coverMimeType,
-      "covers"
     );
+    if (!coverUrl) {
+      return;
+    }
 
     const result = await insertRelease(metadata, coverUrl, primaryArtistId);
 
@@ -88,11 +95,10 @@ export async function createRelease(req: FastifyRequest, reply: FastifyReply) {
 
 /**
  * Controller function for Step 2: Add a Track to an existing Release.
- * Endpoint: POST /artist/releases/:releaseId/tracks
  */
 export async function addTrackToRelease(
   req: FastifyRequest,
-  reply: FastifyReply
+  reply: FastifyReply,
 ) {
   const { releaseId } = req.params as { releaseId: string };
   const primaryArtistId = req.user.id;
@@ -133,19 +139,27 @@ export async function addTrackToRelease(
     }
 
     // 3. Upload Audio File (Passing the Buffer, not the stream)
-    const audioUrl = await uploadToBlob(
+    // const audioUrl = await uploadToBlob(
+    //   audioBuffer,
+    //   audioFileName,
+    //   audioMimeType,
+    //   "audio"
+    // );
+    const audioUrl = await uploadLocally(
       audioBuffer,
       audioFileName,
       audioMimeType,
-      "audio"
     );
 
+    if (!audioUrl) {
+      return;
+    }
     // 4. DB Insertion
     const result = await insertTrackAndLink(
       trackMetadata,
       audioUrl,
       releaseId,
-      primaryArtistId
+      primaryArtistId,
     );
 
     return reply.send({
@@ -158,12 +172,12 @@ export async function addTrackToRelease(
     return reply.code(500).send({ error: "Server error adding track." });
   }
 }
-
+// Getting releases by artist id
 export const getReleases = async (req: FastifyRequest, reply: FastifyReply) => {
   const artistId = req.user.id;
 
   try {
-    const data = await getReleasesByArtist(artistId);
+    const data = await getAllReleases();
 
     // Send the array directly to the frontend
     return reply.send(data);
@@ -174,6 +188,23 @@ export const getReleases = async (req: FastifyRequest, reply: FastifyReply) => {
       .send({ error: "Failed to fetch tracks and releases." });
   }
 };
+
+export async function getByReleaseCategory(
+  req: FastifyRequest,
+  reply: FastifyReply,
+) {
+  const { category } = req.params as { category: string };
+
+  try {
+    const data = await getReleasesByCategory(category);
+    return reply.send(data);
+  } catch (error) {
+    req.log.error(error);
+    return reply
+      .code(500)
+      .send({ error: "Failed to fetch tracks and releases." });
+  }
+}
 
 export async function getMyLibrary(req: FastifyRequest, reply: FastifyReply) {
   const artistId = req.user.id;
@@ -205,10 +236,15 @@ export async function getReleaseById(req: FastifyRequest, reply: FastifyReply) {
   }
 }
 
+// Get all albums paginated
+// get featured albums to be displayed/promoted
+// Get different playlists
+
 export const ReleaseController = {
   createRelease,
   addTrackToRelease,
   getReleases,
   getMyLibrary,
   getReleaseById,
+  getByReleaseCategory,
 };

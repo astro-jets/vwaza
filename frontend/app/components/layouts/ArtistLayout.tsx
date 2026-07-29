@@ -15,6 +15,7 @@ const HEADER_BG = "bg-neutral-900"; // Slightly darker for contrast
 const ArtistLayoutContent: React.FC<ArtistLayoutProps> = ({ children }) => {
     const { user, loading, logout } = useAuth();
     const [isCollapsed, setIsCollapsed] = useState(false);
+    const [showSidebar, setShowSidebar] = useState(true);
 
     // State for Dropdowns
     const [showNotifications, setShowNotifications] = useState(false);
@@ -49,13 +50,18 @@ const ArtistLayoutContent: React.FC<ArtistLayoutProps> = ({ children }) => {
 
     return (
         <div className={`flex min-h-screen ${BG_DARK}`}>
-            <ArtistSidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
+            {showSidebar &&
+                <ArtistSidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />}
 
             <div className={`flex-1 flex flex-col transition-all duration-300 ${isCollapsed ? "md:ml-20" : "md:ml-64"}`}>
-                <header className={`p-4 ${HEADER_BG} shadow-md hidden md:flex items-center justify-between border-b border-red-500 relative z-40`}>
+                <header className={`p-4 ${HEADER_BG} shadow-md flex items-center justify-between border-b border-red-500 relative z-50`}>
                     <BsList
-                        className='fill-white cursor-pointer hover:scale-110 transition-transform text-2xl'
+                        className='hidden md:inline fill-white cursor-pointer hover:scale-110 transition-transform text-2xl'
                         onClick={() => setIsCollapsed(!isCollapsed)}
+                    />
+                    <BsList
+                        className='z-60 inline md:hidden fill-white cursor-pointer hover:scale-110 transition-transform text-2xl'
+                        onClick={() => setShowSidebar(!showSidebar)}
                     />
 
                     <div className="flex items-center space-x-6">

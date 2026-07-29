@@ -1,5 +1,5 @@
 import { useLocation, Link } from "react-router";
-import { FaHome, FaMusic, FaCloudUploadAlt, FaChartBar, FaSignOutAlt, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { FaHome, FaMusic, FaCloudUploadAlt, FaChartBar, FaSignOutAlt, FaChevronLeft, FaChevronRight, FaRecordVinyl } from "react-icons/fa";
 import { useAuth } from "~/context/AuthContext";
 
 interface SidebarProps {
@@ -13,7 +13,7 @@ const ArtistSidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) 
 
     return (
         <aside
-            className={`hidden md:flex flex-col justify-between border-r border-red-500 shadow-2xl fixed left-0 top-0 h-screen bg-neutral-900 transition-all duration-300 z-50 
+            className={` md:flex flex-col justify-between border-r border-red-500 shadow-2xl fixed left-0 top-0 h-screen bg-neutral-900 transition-all duration-300 z-50 
             ${isCollapsed ? "w-20 p-2" : "w-64 p-4"}`}
         >
             <div>
@@ -26,6 +26,7 @@ const ArtistSidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) 
                     <NavLink icon={FaHome} label="Dashboard" href="/artists" isActive={location.pathname === "/artists"} isCollapsed={isCollapsed} />
                     <NavLink icon={FaMusic} label="My Releases" href="/artists/releases" isActive={location.pathname === "/artists/releases"} isCollapsed={isCollapsed} />
                     <NavLink icon={FaCloudUploadAlt} label="New Upload" href="/artists/upload" isActive={location.pathname === "/artists/upload"} isCollapsed={isCollapsed} />
+                    <NavLink icon={FaRecordVinyl} label="Playlists" href="/artists/playlists" isActive={location.pathname === "/artists/playlists"} isCollapsed={isCollapsed} />
                     <NavLink icon={FaChartBar} label="Analytics" href="/artists/analytics" isActive={location.pathname === "/artists/analytics"} isCollapsed={isCollapsed} />
                 </nav>
             </div>

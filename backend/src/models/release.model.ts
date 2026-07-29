@@ -20,7 +20,7 @@ interface TrackResult {
 export async function insertRelease(
   data: Partial<ReleaseFormData>,
   coverUrl: string,
-  primaryArtistId: string
+  primaryArtistId: string,
 ): Promise<ReleaseResult> {
   const result = await sql<ReleaseResult>(
     `
@@ -29,7 +29,7 @@ export async function insertRelease(
         VALUES ($1, $2, $3, $4, $5)
         RETURNING id, title
         `,
-    [data.title, data.releaseType, data.releaseDate, coverUrl, primaryArtistId]
+    [data.title, data.releaseType, data.releaseDate, coverUrl, primaryArtistId],
   );
 
   return result.rows[0];
@@ -44,7 +44,7 @@ export async function insertTrackAndLink(
   trackMetadata: Partial<TrackFormData> & { trackNumber: string },
   audioUrl: string,
   releaseId: string,
-  artistId: string
+  artistId: string,
 ): Promise<TrackResult> {
   // Start transaction to ensure atomicity
   await sql("BEGIN");
@@ -64,7 +64,7 @@ export async function insertTrackAndLink(
         trackMetadata.isrc,
         audioUrl,
         Number(trackMetadata.duration) * 1000, // Convert seconds to milliseconds
-      ]
+      ],
     );
     const trackId = trackResult.rows[0].id;
 
@@ -75,7 +75,7 @@ export async function insertTrackAndLink(
             (release_id, track_id, track_number)
             VALUES ($1, $2, $3)
             `,
-      [releaseId, trackId, Number(trackMetadata.trackNumber)]
+      [releaseId, trackId, Number(trackMetadata.trackNumber)],
     );
 
     // 3. Insert into track_artists (Link main artist)
@@ -85,7 +85,7 @@ export async function insertTrackAndLink(
             (track_id, artist_id, role)
             VALUES ($1, $2, 'main')
             `,
-      [trackId, artistId]
+      [trackId, artistId],
     );
 
     await sql("COMMIT"); // Commit transaction
@@ -129,16 +129,40 @@ export async function getReleasesByArtist(artistId: string): Promise<any[]> {
     WHERE r.primary_artist_id = $1 
     ORDER BY r.created_at DESC, rt.track_number ASC
     `,
-    [artistId]
+    [artistId],
   );
 
   return result.rows;
 }
 
-export async function getReleasesByCategory(
-  artistId: string,
-  category: string
-): Promise<any[]> {
+export async function getAllReleases(): Promise<any[]> {
+  const result = await sql(
+    `
+    SELECT 
+        t.id, 
+        t.title, 
+        t.genre, 
+        t.audio_url, 
+        r.id AS release_id, 
+        r.cover_url, 
+        r.title AS release_title,
+        r.release_date,
+        r.release_type,
+        r.is_published AS status,
+        a.artist_name,
+        rt.track_number
+    FROM releases r
+    JOIN release_tracks rt ON r.id = rt.release_id
+    JOIN tracks t ON rt.track_id = t.id
+    JOIN users a ON r.primary_artist_id = a.id
+    ORDER BY r.created_at DESC, rt.track_number ASC
+    `,
+  );
+
+  return result.rows;
+}
+
+export async function getReleasesByCategory2(category: string): Promise<any[]> {
   const result = await sql(
     `
     SELECT 
@@ -155,11 +179,30 @@ export async function getReleasesByCategory(
     JOIN release_tracks rt ON r.id = rt.release_id
     JOIN tracks t ON rt.track_id = t.id
     JOIN users a ON r.primary_artist_id = a.id
-    WHERE r.primary_artist_id = $1 
-    AND r.release_type = $2
+    WHERE r.release_type = $1
     ORDER BY r.created_at DESC, rt.track_number ASC
     `,
-    [artistId, category]
+    [category],
+  );
+
+  return result.rows;
+}
+
+export async function getReleasesByCategory(category: string): Promise<any[]> {
+  const result = await sql(
+    `
+    SELECT 
+        r.id,
+        r.title,
+        r.cover_url, 
+        r.release_type, 
+        r.release_date,
+        r.is_published AS status,
+        a.artist_name
+    FROM releases r
+    JOIN users a ON r.primary_artist_id = a.id
+    WHERE r.release_type = $1;`,
+    [category],
   );
 
   return result.rows;
@@ -187,7 +230,7 @@ export async function getReleasesById(id: string): Promise<any[]> {
     WHERE r.id = $1 
     ORDER BY r.created_at DESC, rt.track_number ASC
     `,
-    [id]
+    [id],
   );
 
   return result.rows;
@@ -228,4 +271,74 @@ export async function getArtistLibrary(artistId: string, type: string) {
 
   const result = await sql(query, params);
   return result.rows;
+}
+
+/**
+ * Fetches assets for a release (Cover + all Tracks) for Vercel Blob cleanup.
+ * Performs a LEFT JOIN to ensure we get the cover even if there are no tracks.
+ */
+export async function getReleaseAssets(releaseId: string) {
+  const result = await sql(
+    `
+    SELECT r.cover_url, t.audio_url 
+    FROM releases r
+    LEFT JOIN tracks t ON r.id = t.release_id
+    WHERE r.id = $1
+  `,
+    [releaseId],
+  );
+
+  if (result.rows.length === 0) return null;
+
+  // The cover_url is repeated on every row, just take the first one
+  const coverUrl = result.rows[0].cover_url;
+
+  // Collect all non-null audio URLs
+  const audioUrls = result.rows
+    .map((row) => row.audio_url)
+    .filter((url) => url !== null && url !== "");
+
+  return {
+    coverUrl,
+    audioUrls,
+  };
+}
+
+/**
+ * Fetches a single track's data including its parent release ID and audio URL
+ */
+export async function getTrackData(trackId: string) {
+  const result = await sql(
+    `SELECT id, release_id, audio_url FROM tracks WHERE id = $1`,
+    [trackId],
+  );
+  return result.rows[0] || null;
+}
+
+/**
+ * Checks how many tracks exist for a specific release.
+ */
+export async function getTrackCountByRelease(
+  releaseId: string,
+): Promise<number> {
+  const result = await sql(
+    `SELECT COUNT(*) as count FROM tracks WHERE release_id = $1`,
+    [releaseId],
+  );
+  return parseInt(result.rows[0].count, 10);
+}
+
+/**
+ * Deletes the release record.
+ * PostgreSQL 'ON DELETE CASCADE' will automatically remove associated tracks.
+ */
+export async function deleteReleaseRecord(releaseId: string) {
+  return await sql(`DELETE FROM releases WHERE id = $1`, [releaseId]);
+}
+
+/**
+ * Deletes a single track record.
+ */
+export async function deleteTrackRecord(trackId: string) {
+  return await sql(`DELETE FROM tracks WHERE id = $1`, [trackId]);
 }

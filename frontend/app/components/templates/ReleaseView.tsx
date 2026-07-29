@@ -174,7 +174,7 @@ export default function ReleaseView() {
                     {/* Cover Image with Edit Overlay */}
                     <div className="relative group shrink-0">
                         <img
-                            src={tracks[0]?.cover_url || '/placeholder.png'}
+                            src={`import type { EmblaOptionsType } from 'embla-carousel'${tracks[0]?.cover_url}` || '/placeholder.png'}
                             className="w-56 h-56 rounded-2xl shadow-2xl object-cover border border-neutral-700 transition-transform group-hover:scale-[1.02]"
                         />
                         <button

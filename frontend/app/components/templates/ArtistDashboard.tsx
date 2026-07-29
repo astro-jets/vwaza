@@ -117,7 +117,7 @@ const ArtistDashboardTemplate: React.FC = () => {
                 <div className="bg-linear-to-r from-neutral-900 to-neutral-800 border border-neutral-700/50 rounded-3xl p-6 shadow-2xl">
                     <div className="flex flex-col lg:flex-row items-center gap-8">
                         <img
-                            src={releases[selectedIndex]?.cover_url || '/placeholder.png'}
+                            src={`import type { EmblaOptionsType } from 'embla-carousel'${releases[selectedIndex]?.cover_url}` || '/placeholder.png'}
                             alt="Cover"
                             className="w-48 h-48 rounded-2xl shadow-2xl object-cover border-2 border-neutral-700"
                         />
@@ -213,7 +213,7 @@ const ArtistDashboardTemplate: React.FC = () => {
                                 <div key={release.id} className="grid grid-cols-12 gap-4 p-4 items-center hover:bg-white/5 transition-all group">
                                     <div className="col-span-6 md:col-span-5 flex items-center space-x-4">
                                         <div className="relative shrink-0 cursor-pointer" onClick={() => handlePlayClick(globalIndex)}>
-                                            <img src={release.cover_url} className="w-12 h-12 rounded-lg object-cover group-hover:opacity-50 transition-opacity" />
+                                            <img src={`import type { EmblaOptionsType } from 'embla-carousel'${release.cover_url}`} className="w-12 h-12 rounded-lg object-cover group-hover:opacity-50 transition-opacity" />
                                             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-white">
                                                 {globalIndex === selectedIndex && isPlaying ? <FiPause /> : <FiPlay />}
                                             </div>
