@@ -6,7 +6,7 @@ import useEmblaCarousel from 'embla-carousel-react'
 import { FaMicrophoneAlt } from 'react-icons/fa'
 
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import ScrollTrigger from "gsap/ScrollTrigger";
 import MotionPathPlugin from "gsap/MotionPathPlugin";
 import CustomEase from "gsap/CustomEase";
 import { useGSAP } from '@gsap/react'
