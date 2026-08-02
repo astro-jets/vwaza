@@ -19,9 +19,9 @@ export default [
   route("/artists/releases/:id", "pages/artist/Release.tsx"),
   route("/artists/upload", "pages/artist/CreateRelease.tsx"),
   route("/artists/playlists", "pages/artist/Playlists.tsx"),
-  route("/artists/events", "pages/artist/events.tsx"),
+  route("/artists/events", "pages/artist/Events.tsx"),
   route("/artists/playlists/:id", "pages/artist/playlistsingle.tsx"),
-  route("/artists/newplaylist", "pages/artist/newPlaylist.tsx"),
+  route("/artists/newplaylist", "pages/artist/NewPlaylist.tsx"),
 
   // Admin Routes
   // route("/admin/dashboard", "pages/admin/dashboard.tsx"),

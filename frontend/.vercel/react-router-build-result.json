@@ -1,0 +1,423 @@
+{
+  "buildManifest": {
+    "serverBundles": {
+      "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0": {
+        "id": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+        "file": "build/server/nodejs_eyJydW50aW1lIjoibm9kZWpzIn0/index.js",
+        "config": {
+          "runtime": "nodejs"
+        }
+      }
+    },
+    "routeIdToServerBundleId": {
+      "pages/public/albums": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "pages/public/discover": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "pages/public/market": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "pages/public/album": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "pages/movies/landing": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "pages/public/PlaylistCatalogue": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "pages/public/PlaylistSingle": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "pages/public/events": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "pages/public/eventsingle": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "pages/public/home": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "pages/public/artists": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "pages/artist/Releases": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "pages/artist/Release": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "pages/artist/CreateRelease": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "pages/artist/Playlists": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "pages/artist/Events": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "pages/artist/playlistsingle": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0",
+      "pages/artist/NewPlaylist": "nodejs_eyJydW50aW1lIjoibm9kZWpzIn0"
+    },
+    "routes": {
+      "root": {
+        "id": "root",
+        "file": "app/root.tsx",
+        "path": "",
+        "config": {}
+      },
+      "pages/public/albums": {
+        "id": "pages/public/albums",
+        "parentId": "root",
+        "file": "app/pages/public/albums.tsx",
+        "path": "/albums",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "pages/public/discover": {
+        "id": "pages/public/discover",
+        "parentId": "root",
+        "file": "app/pages/public/discover.tsx",
+        "path": "/discover",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "pages/public/market": {
+        "id": "pages/public/market",
+        "parentId": "root",
+        "file": "app/pages/public/market.tsx",
+        "path": "/market",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "pages/public/album": {
+        "id": "pages/public/album",
+        "parentId": "root",
+        "file": "app/pages/public/album.tsx",
+        "path": "/album/:id",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "pages/movies/landing": {
+        "id": "pages/movies/landing",
+        "parentId": "root",
+        "file": "app/pages/movies/landing.tsx",
+        "path": "/movies",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "pages/public/PlaylistCatalogue": {
+        "id": "pages/public/PlaylistCatalogue",
+        "parentId": "root",
+        "file": "app/pages/public/PlaylistCatalogue.tsx",
+        "path": "/playlists",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "pages/public/PlaylistSingle": {
+        "id": "pages/public/PlaylistSingle",
+        "parentId": "root",
+        "file": "app/pages/public/PlaylistSingle.tsx",
+        "path": "/playlists/:id",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "pages/public/events": {
+        "id": "pages/public/events",
+        "parentId": "root",
+        "file": "app/pages/public/events.tsx",
+        "path": "/events",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "pages/public/eventsingle": {
+        "id": "pages/public/eventsingle",
+        "parentId": "root",
+        "file": "app/pages/public/eventsingle.tsx",
+        "path": "/events/:id",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "pages/public/home": {
+        "id": "pages/public/home",
+        "parentId": "root",
+        "file": "app/pages/public/home.tsx",
+        "index": true,
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "pages/public/artists": {
+        "id": "pages/public/artists",
+        "parentId": "root",
+        "file": "app/pages/public/artists.tsx",
+        "path": "/artists",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "pages/artist/Releases": {
+        "id": "pages/artist/Releases",
+        "parentId": "root",
+        "file": "app/pages/artist/Releases.tsx",
+        "path": "/artists/releases",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "pages/artist/Release": {
+        "id": "pages/artist/Release",
+        "parentId": "root",
+        "file": "app/pages/artist/Release.tsx",
+        "path": "/artists/releases/:id",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "pages/artist/CreateRelease": {
+        "id": "pages/artist/CreateRelease",
+        "parentId": "root",
+        "file": "app/pages/artist/CreateRelease.tsx",
+        "path": "/artists/upload",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "pages/artist/Playlists": {
+        "id": "pages/artist/Playlists",
+        "parentId": "root",
+        "file": "app/pages/artist/Playlists.tsx",
+        "path": "/artists/playlists",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "pages/artist/Events": {
+        "id": "pages/artist/Events",
+        "parentId": "root",
+        "file": "app/pages/artist/Events.tsx",
+        "path": "/artists/events",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "pages/artist/playlistsingle": {
+        "id": "pages/artist/playlistsingle",
+        "parentId": "root",
+        "file": "app/pages/artist/playlistsingle.tsx",
+        "path": "/artists/playlists/:id",
+        "config": {
+          "runtime": "nodejs"
+        }
+      },
+      "pages/artist/NewPlaylist": {
+        "id": "pages/artist/NewPlaylist",
+        "parentId": "root",
+        "file": "app/pages/artist/NewPlaylist.tsx",
+        "path": "/artists/newplaylist",
+        "config": {
+          "runtime": "nodejs"
+        }
+      }
+    }
+  },
+  "reactRouterConfig": {
+    "appDirectory": "D:/projects/Vwaza/frontend/app",
+    "basename": "/",
+    "buildDirectory": "D:/projects/Vwaza/frontend/build",
+    "future": {
+      "unstable_optimizeDeps": false,
+      "unstable_subResourceIntegrity": false,
+      "v8_middleware": false,
+      "v8_splitRouteModules": false,
+      "v8_viteEnvironmentApi": false
+    },
+    "routes": {
+      "root": {
+        "id": "root",
+        "file": "root.tsx",
+        "path": ""
+      },
+      "pages/public/albums": {
+        "id": "pages/public/albums",
+        "parentId": "root",
+        "file": "pages/public/albums.tsx",
+        "path": "/albums"
+      },
+      "pages/public/discover": {
+        "id": "pages/public/discover",
+        "parentId": "root",
+        "file": "pages/public/discover.tsx",
+        "path": "/discover"
+      },
+      "pages/public/market": {
+        "id": "pages/public/market",
+        "parentId": "root",
+        "file": "pages/public/market.tsx",
+        "path": "/market"
+      },
+      "pages/public/album": {
+        "id": "pages/public/album",
+        "parentId": "root",
+        "file": "pages/public/album.tsx",
+        "path": "/album/:id"
+      },
+      "pages/movies/landing": {
+        "id": "pages/movies/landing",
+        "parentId": "root",
+        "file": "pages/movies/landing.tsx",
+        "path": "/movies"
+      },
+      "pages/public/PlaylistCatalogue": {
+        "id": "pages/public/PlaylistCatalogue",
+        "parentId": "root",
+        "file": "pages/public/PlaylistCatalogue.tsx",
+        "path": "/playlists"
+      },
+      "pages/public/PlaylistSingle": {
+        "id": "pages/public/PlaylistSingle",
+        "parentId": "root",
+        "file": "pages/public/PlaylistSingle.tsx",
+        "path": "/playlists/:id"
+      },
+      "pages/public/events": {
+        "id": "pages/public/events",
+        "parentId": "root",
+        "file": "pages/public/events.tsx",
+        "path": "/events"
+      },
+      "pages/public/eventsingle": {
+        "id": "pages/public/eventsingle",
+        "parentId": "root",
+        "file": "pages/public/eventsingle.tsx",
+        "path": "/events/:id"
+      },
+      "pages/public/home": {
+        "id": "pages/public/home",
+        "parentId": "root",
+        "file": "pages/public/home.tsx",
+        "index": true
+      },
+      "pages/public/artists": {
+        "id": "pages/public/artists",
+        "parentId": "root",
+        "file": "pages/public/artists.tsx",
+        "path": "/artists"
+      },
+      "pages/artist/Releases": {
+        "id": "pages/artist/Releases",
+        "parentId": "root",
+        "file": "pages/artist/Releases.tsx",
+        "path": "/artists/releases"
+      },
+      "pages/artist/Release": {
+        "id": "pages/artist/Release",
+        "parentId": "root",
+        "file": "pages/artist/Release.tsx",
+        "path": "/artists/releases/:id"
+      },
+      "pages/artist/CreateRelease": {
+        "id": "pages/artist/CreateRelease",
+        "parentId": "root",
+        "file": "pages/artist/CreateRelease.tsx",
+        "path": "/artists/upload"
+      },
+      "pages/artist/Playlists": {
+        "id": "pages/artist/Playlists",
+        "parentId": "root",
+        "file": "pages/artist/Playlists.tsx",
+        "path": "/artists/playlists"
+      },
+      "pages/artist/Events": {
+        "id": "pages/artist/Events",
+        "parentId": "root",
+        "file": "pages/artist/Events.tsx",
+        "path": "/artists/events"
+      },
+      "pages/artist/playlistsingle": {
+        "id": "pages/artist/playlistsingle",
+        "parentId": "root",
+        "file": "pages/artist/playlistsingle.tsx",
+        "path": "/artists/playlists/:id"
+      },
+      "pages/artist/NewPlaylist": {
+        "id": "pages/artist/NewPlaylist",
+        "parentId": "root",
+        "file": "pages/artist/NewPlaylist.tsx",
+        "path": "/artists/newplaylist"
+      }
+    },
+    "routeDiscovery": {
+      "mode": "lazy",
+      "manifestPath": "/__manifest"
+    },
+    "serverBuildFile": "index.js",
+    "serverModuleFormat": "esm",
+    "ssr": true,
+    "unstable_routeConfig": [
+      {
+        "id": "root",
+        "path": "",
+        "file": "root.tsx",
+        "children": [
+          {
+            "file": "pages/public/albums.tsx",
+            "path": "/albums"
+          },
+          {
+            "file": "pages/public/discover.tsx",
+            "path": "/discover"
+          },
+          {
+            "file": "pages/public/market.tsx",
+            "path": "/market"
+          },
+          {
+            "file": "pages/public/album.tsx",
+            "path": "/album/:id"
+          },
+          {
+            "file": "pages/movies/landing.tsx",
+            "path": "/movies"
+          },
+          {
+            "file": "pages/public/PlaylistCatalogue.tsx",
+            "path": "/playlists"
+          },
+          {
+            "file": "pages/public/PlaylistSingle.tsx",
+            "path": "/playlists/:id"
+          },
+          {
+            "file": "pages/public/events.tsx",
+            "path": "/events"
+          },
+          {
+            "file": "pages/public/eventsingle.tsx",
+            "path": "/events/:id"
+          },
+          {
+            "file": "pages/public/home.tsx",
+            "index": true
+          },
+          {
+            "file": "pages/public/artists.tsx",
+            "path": "/artists"
+          },
+          {
+            "file": "pages/artist/Releases.tsx",
+            "path": "/artists/releases"
+          },
+          {
+            "file": "pages/artist/Release.tsx",
+            "path": "/artists/releases/:id"
+          },
+          {
+            "file": "pages/artist/CreateRelease.tsx",
+            "path": "/artists/upload"
+          },
+          {
+            "file": "pages/artist/Playlists.tsx",
+            "path": "/artists/playlists"
+          },
+          {
+            "file": "pages/artist/Events.tsx",
+            "path": "/artists/events"
+          },
+          {
+            "file": "pages/artist/playlistsingle.tsx",
+            "path": "/artists/playlists/:id"
+          },
+          {
+            "file": "pages/artist/NewPlaylist.tsx",
+            "path": "/artists/newplaylist"
+          }
+        ]
+      }
+    ]
+  },
+  "viteConfig": {
+    "build": {
+      "assetsDir": "assets"
+    }
+  }
+}
