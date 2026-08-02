@@ -9,7 +9,7 @@ import { useAuth } from "~/context/AuthContext";
 import SuccessModal from "~/components/modals/SuccessModal";
 import { BsX } from "react-icons/bs";
 
-// --- API Helpers ---
+// --- API Helpers -
 
 const API_BASE_URL = "http://localhost:3001/artist";
 
