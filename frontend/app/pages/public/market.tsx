@@ -9,7 +9,7 @@ import { BiCartAdd } from "react-icons/bi";
 // GSAP
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { MotionPathPlugin } from "gsap/MotionPathPlugin";
+import MotionPathPlugin from "gsap/MotionPathPlugin";
 import CustomEase from "gsap/CustomEase";
 import { PiBaseballCapFill, } from "react-icons/pi";
 import { RiToolsLine } from "react-icons/ri";
