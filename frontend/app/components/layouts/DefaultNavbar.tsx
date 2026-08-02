@@ -8,7 +8,7 @@ import Player from "../Player/Player";
 import { Link } from "react-router";
 
 //GSAP
-import { gsap } from "gsap";
+import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import MotionPathPlugin from "gsap/MotionPathPlugin";
 import CustomEase from "gsap/CustomEase";
