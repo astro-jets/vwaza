@@ -8,7 +8,7 @@ import { FaMicrophoneAlt } from 'react-icons/fa'
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
-import { CustomEase } from "gsap/CustomEase";
+import CustomEase from "gsap/CustomEase";
 import { useGSAP } from '@gsap/react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router'

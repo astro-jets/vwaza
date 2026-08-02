@@ -11,7 +11,7 @@ import { Link } from "react-router";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
-import { CustomEase } from "gsap/CustomEase";
+import CustomEase from "gsap/CustomEase";
 import { useGSAP } from '@gsap/react'
 import { BiCart, BiMoviePlay, BiShoppingBag } from "react-icons/bi";
 import { FiSearch } from "react-icons/fi";
