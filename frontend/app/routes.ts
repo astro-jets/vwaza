@@ -2,7 +2,6 @@ import { type RouteConfig, index, route } from "@react-router/dev/routes";
 
 export default [
   // Public Routes
-
   route("/albums", "pages/public/albums.tsx"),
   route("/discover", "pages/public/discover.tsx"),
   route("/market", "pages/public/market.tsx"),
@@ -21,7 +20,7 @@ export default [
   route("/artists/upload", "pages/artist/CreateRelease.tsx"),
   route("/artists/playlists", "pages/artist/Playlists.tsx"),
   route("/artists/events", "pages/artist/events.tsx"),
-  route("/artists/playlists/:id", "pages/artist/playlistSingle.tsx"),
+  route("/artists/playlists/:id", "pages/artist/playlistsingle.tsx"),
   route("/artists/newplaylist", "pages/artist/newPlaylist.tsx"),
 
   // Admin Routes
