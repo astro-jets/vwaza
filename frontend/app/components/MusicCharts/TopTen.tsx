@@ -49,12 +49,12 @@ const TopTenCharts = ({ tracks, title }: { title: string, tracks: ReleaseSummary
                             <div
                                 key={index}
                                 className={`flex items-center  p-1 rounded-lg lg:hover:bg-[#ff2424b6] duration-[900000]
-                                ${audio.title == track.title ? 'bg-[#b80000ee]' : 'bg-white/30 dark:bg-[#111111b4]'}
-                                ${audio.title == track.title && playing ? 'playing' : ''}
+                                ${audio?.title == track.title ? 'bg-[#b80000ee]' : 'bg-white/30 dark:bg-[#111111b4]'}
+                                ${audio?.title == track.title && playing ? 'playing' : ''}
                                 `}
                                 onClick={() => {
 
-                                    if (audio.title == track.title) {
+                                    if (audio?.title == track.title) {
                                         setPlaying(!playing);
                                     } else {
                                         // setAudio(track);
@@ -79,7 +79,7 @@ const TopTenCharts = ({ tracks, title }: { title: string, tracks: ReleaseSummary
                                 </div>
 
                                 {/* Play/Pause */}
-                                <div className={`mx-3 ${audio.title == track.title ? 'inline' : 'hidden'}`}>
+                                <div className={`mx-3 ${audio?.title == track.title ? 'inline' : 'hidden'}`}>
                                     {
                                         playing ? <BsPause color='#fff' size={20} /> : <BsPlay color='#fff' size={20} />
                                     }

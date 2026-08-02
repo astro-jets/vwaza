@@ -67,10 +67,10 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
             releases.length ?
               releases.map((track, index) => (
                 <img src={`/uploads/images/${track.cover_url}`} loading='lazy' height={560} width={560} key={index}
-                  className={`w-25 h-25  md:w-45 md:h-45  cursor-pointer rounded-full ${audio.title == track.title && playing ? 'animate-rotating' : ''}`}
+                  className={`w-25 h-25  md:w-45 md:h-45  cursor-pointer rounded-full ${audio?.title == track.title && playing ? 'animate-rotating' : ''}`}
                   onClick={() => {
 
-                    if (audio.title == track.title) {
+                    if (audio?.title == track.title) {
                       setPlaying(!playing);
                     } else {
                       setAudio(track);

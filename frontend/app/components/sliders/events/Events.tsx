@@ -30,7 +30,7 @@ function EventsSlider() {
 
     return (
 
-        <section className="flex flex-col h-65 w-full items-start">
+        <section className="flex flex-col h-75  w-full items-start">
             <div className="flex flex-col w-full h-full my-4">
                 <div className="flex w-full items-center space-x-2 px-4 mb-3">
                     <FaTheaterMasks size={20} className='fill-black dark:fill-white' />

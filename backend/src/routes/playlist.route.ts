@@ -31,7 +31,7 @@ export default async function playlistsRoutes(fastify: FastifyInstance) {
   // Route: GET /artist/playlists
   fastify.get(
     "/",
-    { preHandler: authenticate },
+    { preHandler: optionalAuthenticate },
     PlaylistController.getMyPlaylists,
   );
 

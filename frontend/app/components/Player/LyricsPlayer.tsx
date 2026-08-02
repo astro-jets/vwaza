@@ -8,17 +8,16 @@ interface LyricLine {
 
 interface LyricsPlayerProps {
     lyrics: LyricLine[];
-    audioRef: React.RefObject<HTMLAudioElement>; // Pass the audio element ref
+    audioRef: React.RefObject<HTMLAudioElement | null>; // Fixed: inner current property can be null
 }
 
 const LyricsPlayer: React.FC<LyricsPlayerProps> = ({ lyrics, audioRef }) => {
     const [currentTime, setCurrentTime] = useState<number>(0);
     const lyricsRef = useRef<HTMLDivElement>(null);
 
-
     // Sync currentTime with the audio playback
     useEffect(() => {
-        const audioElement = audioRef.current;
+        const audioElement = audioRef?.current;
         if (!audioElement) return;
 
         const handleTimeUpdate = () => {
@@ -50,18 +49,18 @@ const LyricsPlayer: React.FC<LyricsPlayerProps> = ({ lyrics, audioRef }) => {
 
     return (
         <div
-            className="w-full h-full overflow-hidden  text-white rounded-xl "
+            className="w-full h-full overflow-hidden text-white rounded-xl"
             ref={lyricsRef}
         >
             <AnimatePresence>
                 {visibleLyrics.map((line, index) => (
                     <motion.p
-                        key={line.time}
+                        key={`${line.time}-${index}`}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.5 }}
-                        className="text-xl text-justify font-thin  my-4 text-white"
+                        className="text-xl text-justify font-thin my-4 text-white"
                     >
                         {line.text}
                     </motion.p>

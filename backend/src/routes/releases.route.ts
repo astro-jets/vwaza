@@ -26,7 +26,7 @@ export default async function releasesRoutes(fastify: FastifyInstance) {
   // 3. Existing route for fetching  all releases
   fastify.get(
     "/releases",
-    { preHandler: authenticate },
+    { preHandler: optionalAuthenticate },
     ReleaseController.getReleases,
   );
 

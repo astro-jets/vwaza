@@ -117,11 +117,9 @@ export async function getUserPlaylistsModel(userId: string): Promise<any[]> {
       COUNT(pt.track_id)::int AS track_count
     FROM playlists p
     LEFT JOIN playlist_tracks pt ON p.id = pt.playlist_id
-    WHERE p.user_id = $1
     GROUP BY p.id
     ORDER BY p.created_at DESC
     `,
-    [userId],
   );
 
   return result.rows;

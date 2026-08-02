@@ -174,7 +174,7 @@ export async function addTrackToRelease(
 }
 // Getting releases by artist id
 export const getReleases = async (req: FastifyRequest, reply: FastifyReply) => {
-  const artistId = req.user.id;
+  // const artistId = req.user.id;
 
   try {
     const data = await getAllReleases();

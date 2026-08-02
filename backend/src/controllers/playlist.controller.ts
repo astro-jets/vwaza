@@ -115,10 +115,10 @@ export async function searchTracks(req: FastifyRequest, reply: FastifyReply) {
  * Get all playlists created by the logged-in user
  */
 export async function getMyPlaylists(req: FastifyRequest, reply: FastifyReply) {
-  const userId = req.user.id;
+  // const userId = req.user.id;
 
   try {
-    const playlists = await getUserPlaylistsModel(userId);
+    const playlists = await getUserPlaylistsModel("");
     return reply.send(playlists);
   } catch (error) {
     req.log.error(error);

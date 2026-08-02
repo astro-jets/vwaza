@@ -4,32 +4,29 @@ export default [
   // Public Routes
 
   route("/albums", "pages/public/albums.tsx"),
+  route("/discover", "pages/public/discover.tsx"),
   route("/market", "pages/public/market.tsx"),
   route("/album/:id", "pages/public/album.tsx"),
   route("/movies", "pages/movies/landing.tsx"),
+  route("/playlists", "pages/public/PlaylistCatalogue.tsx"),
+  route("/playlists/:id", "pages/public/playlistsingle.tsx"),
+  route("/events", "pages/public/events.tsx"),
   route("/events/:id", "pages/public/eventsingle.tsx"),
   index("pages/public/home.tsx"),
 
-  route("/maurice", "pages/maurice/landing.tsx"),
-  route("/maurice/about", "pages/maurice/about.tsx"),
-  route("/maurice/services", "pages/maurice/services.tsx"),
-  route("/maurice/insights", "pages/maurice/insights.tsx"),
-  route("/maurice/contact", "pages/maurice/contacts.tsx"),
-  route("/maurice/record", "pages/maurice/record.tsx"),
-
   // Artist Routes
-  route("/artists", "pages/artist/dashboard.tsx"),
-  route("/artists/releases", "pages/artist/releases.tsx"),
-  route("/artists/releases/:id", "pages/artist/release.tsx"),
-  route("/artists/upload", "pages/artist/createrelease.tsx"),
-  route("/artists/playlists", "pages/artist/playlists.tsx"),
-  route("/artists/events", "pages/artist/events.tsx"),
-  route("/artists/playlists/:id", "pages/artist/playlistsingle.tsx"),
-  route("/artists/newplaylist", "pages/artist/newPlaylist.tsx"),
+  route("/artists", "pages/public/artists.tsx"),
+  route("/artists/releases", "pages/artist/Releases.tsx"),
+  route("/artists/releases/:id", "pages/artist/Release.tsx"),
+  route("/artists/upload", "pages/artist/CreateRelease.tsx"),
+  route("/artists/playlists", "pages/artist/Playlists.tsx"),
+  route("/artists/events", "pages/artist/Events.tsx"),
+  route("/artists/playlists/:id", "pages/artist/PlaylistSingle.tsx"),
+  route("/artists/newplaylist", "pages/artist/NewPlaylist.tsx"),
 
   // Admin Routes
-  route("/admin/dashboard", "pages/admin/dashboard.tsx"),
-  route("/admin/releases", "pages/admin/reviewrelease.tsx"),
-  route("/signup", "pages/auth/SignupPage.tsx"),
-  route("/login", "pages/auth/LoginPage.tsx"),
+  // route("/admin/dashboard", "pages/admin/dashboard.tsx"),
+  // route("/admin/releases", "pages/admin/reviewrelease.tsx"),
+  // route("/signup", "pages/auth/SignupPage.tsx"),
+  // route("/login", "pages/auth/LoginPage.tsx"),
 ] satisfies RouteConfig;
