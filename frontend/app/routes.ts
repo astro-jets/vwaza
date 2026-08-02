@@ -9,7 +9,7 @@ export default [
   route("/album/:id", "pages/public/album.tsx"),
   route("/movies", "pages/movies/landing.tsx"),
   route("/playlists", "pages/public/PlaylistCatalogue.tsx"),
-  route("/playlists/:id", "pages/public/playlistSingle.tsx"),
+  route("/playlists/:id", "pages/public/PlaylistSingle.tsx"),
   route("/events", "pages/public/events.tsx"),
   route("/events/:id", "pages/public/eventsingle.tsx"),
   index("pages/public/home.tsx"),
